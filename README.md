@@ -223,10 +223,29 @@ words_all_filters
 ```
 
 
-## API
-TODO.
+#本地部署
 
-类的实现、函数的参数请参考源码注释。
+server 
+```shell script
+cd deploy
+sh build_and_push.sh
+docker run -v -d -p 8080:8080 textrank
+```
+client
+
+```python
+# test 
+#curl http://localhost:8080/ping 
+
+# curl
+import requests
+import json
+
+url='http://localhost:8080/invocations'
+data={"data": 1,"content_type":"test"}
+data = json.dumps(data)
+r = requests.post(url,data=data)
+```
 
 ## License
 [MIT](./LICENSE)
