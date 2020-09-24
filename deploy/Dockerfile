@@ -15,7 +15,7 @@ ENV PATH="/opt/program:${PATH}"
 # SageMaker requirements
 ##########################################################################################
 ## install flask
-RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple/ flask gevent gunicorn
+RUN pip install networkx==2.3 flask gevent gunicorn jieba==0.42.1
 
 ### Install nginx notebook
 RUN apt-get -y update && apt-get install -y --no-install-recommends \
@@ -33,11 +33,7 @@ COPY serve.py /opt/program/
 COPY predictor.py /opt/program/
 COPY wsgi.py /opt/program/
 COPY nginx.conf /opt/program/
-
-# Copy pretrained model
-#COPY resnet50_cars-0000.params /opt/program/
-#COPY resnet50_cars-symbol.json /opt/program/
-#COPY classes.txt /opt/program/
+COPY textrank4zh/* /opt/program/textrank4zh/
 
 WORKDIR /opt/program
 
