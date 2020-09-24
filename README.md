@@ -252,7 +252,10 @@ print (r.text)
 
 ## Deploy endpoint on SageMaker 
 ```shell script
-python create_endpoint.py
+python create_endpoint.py \
+--endpoint_ecr_image_path '847380964353.dkr.ecr.us-east-1.amazonaws.com/textrank' \
+--endpoint_name 'textrank' \
+--instance_type "ml.m5.xlarge"
 ```
 
 ## Deploy via Spot Tagging Bot

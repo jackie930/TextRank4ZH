@@ -91,7 +91,7 @@ def deploy_endpoint():
         # create endpoint
         create_endpoint_response = sm.create_endpoint(
             EndpointName=args.endpoint_name,
-            EndpointConfigName=args.endpoint_config_name)
+            EndpointConfigName=endpoint_config_name)
 
     except Exception as e:
         print("!!! Cannot create endpoint - Exception is >> {}".format(e))
