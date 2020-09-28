@@ -48,9 +48,9 @@ echo ${fullname}
 # If the repository doesn't exist in ECR, create it.
 aws ecr describe-repositories --repository-names "${image}" --region ${region} || aws ecr create-repository --repository-name "${image}" --region ${region}
 
-#aws ecr set-repository-policy \
- #   --repository-name "${image}" \
-  #  --policy-text "file://../ecr-policy.json"
+aws ecr set-repository-policy \
+    --repository-name "${image}" \
+    --policy-text "file://../ecr-policy.json"
 
 # Get the login command from ECR and execute it directly
 $(aws ecr get-login --registry-ids ${account} --region ${region} --no-include-email)
@@ -59,6 +59,6 @@ $(aws ecr get-login --registry-ids ${registry_id} --region ${region} --no-includ
 # Build the docker image, tag with full name and then push it to ECR
 docker build -t ${image} -f Dockerfile . --build-arg REGISTRY_URI=${registry_uri}
 docker tag ${image} ${fullname}
-#docker push ${fullname}
+docker push ${fullname}
 
 #done

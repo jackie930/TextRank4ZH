@@ -227,7 +227,7 @@ words_all_filters
 
 server 
 ```shell script
-cd deploy
+cd apps/text_summry_endpoint
 sh build_and_push.sh
 docker run -v -d -p 8080:8080 textrank
 ```
@@ -253,12 +253,33 @@ print (r.text)
 ## Deploy endpoint on SageMaker 
 ```shell script
 python create_endpoint.py \
---endpoint_ecr_image_path '847380964353.dkr.ecr.us-east-1.amazonaws.com/textrank' \
+--endpoint_ecr_image_path '847380964353.dkr.ecr.us-east-1.amazonaws.com/textrank:latest' \
 --endpoint_name 'textrank' \
 --instance_type "ml.m5.xlarge"
 ```
 
+在部署结束后，看到SageMaker控制台生成了对应的endpoint,可以使用如下客户端代码测试调用
+```python
+from boto3.session import Session
+import json
+data={"data": "这间酒店位于北京东三环，里面摆放很多雕塑，文艺气息十足。答谢宴于晚上8点开始。"}
+
+session = Session()
+    
+runtime = session.client("runtime.sagemaker")
+response = runtime.invoke_endpoint(
+    EndpointName='textrank',
+    ContentType="application/json",
+    Body=json.dumps(data),
+)
+
+result = json.loads(response["Body"].read())
+print (result)
+```
+
 ## Deploy via Spot Tagging Bot
+在确保可以部署成功endpint的情况下，我们可以将此功能注册为一个新的机器人。
+
 
 ## License
 [MIT](./LICENSE)
