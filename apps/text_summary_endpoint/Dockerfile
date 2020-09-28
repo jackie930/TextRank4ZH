@@ -15,7 +15,7 @@ ENV PATH="/opt/program:${PATH}"
 # SageMaker requirements
 ##########################################################################################
 ## install flask
-RUN pip install networkx==2.3 flask gevent gunicorn jieba==0.42.1
+RUN pip install networkx==2.3 flask gevent gunicorn jieba==0.42.1 -i https://opentuna.cn/pypi/web/simple
 
 ### Install nginx notebook
 RUN apt-get -y update && apt-get install -y --no-install-recommends \
