@@ -113,7 +113,9 @@ def bot_infer(session, endpoint_name, text):
     """
     # first preprocess input text
     eprint(endpoint_name)
-
+    eprint ("<<<<<<<< source: ", text)
+    data={"data": text}
+    eprint ("<<<<<<<< data: ", data)
     runtime = session.client("runtime.sagemaker")
     response = runtime.invoke_endpoint(
         EndpointName=endpoint_name,
