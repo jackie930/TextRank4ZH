@@ -7,13 +7,10 @@ import os
 
 import sys
 
-sys.path.append("./dependency")
 import json
-import numpy as np
 from boto3.session import Session
 
-import tokenization
-from extract_features import InputExample, convert_examples_to_features
+
 from elasticsearch import Elasticsearch, RequestsHttpConnection
 from datetime import datetime
 
@@ -41,7 +38,7 @@ eprint(
         elastic_search_port, elastic_search_protocol, job_id))
 
 
-def sentiment_analysis_main(input_s3_path_list: list, endpoint_name, output_s3_bucket, output_s3_prefix, region_name):
+def text_summary_main(input_s3_path_list: list, endpoint_name, output_s3_bucket, output_s3_prefix, region_name):
     """
     function: save json_files back to s3 (key: file name value: tag label)
     :param input_s3_path_list: 读入s3文件路径list
@@ -71,7 +68,7 @@ def sentiment_analysis_main(input_s3_path_list: list, endpoint_name, output_s3_b
         f.close()
 
         # infer endpoint
-        label = single_bert_infer(session, endpoint_name, text)
+        label = bot_infer(session, endpoint_name, text)
         result[s3_path] = label
 
         # save json file
@@ -109,27 +106,14 @@ def delete_file(file):
             pass
 
 
-def preprocess(text):
-    """
- function: preprocess text into input numpy array
-    """
-    vocab_file = os.environ.get("vocab_file", "./dependency/vocab.txt")
-    max_token_len = os.environ.get("max_token_len", 128)
-    text_a = text
-    example = InputExample(unique_id=None, text_a=text_a, text_b=None)
-    tokenizer = tokenization.FullTokenizer(vocab_file=vocab_file, do_lower_case=True)
-    feature = convert_examples_to_features([example], max_token_len, tokenizer)[0]
-    input_ids = np.reshape([feature.input_ids], (1, max_token_len))
-    return {"inputs": {"input_ids": input_ids.tolist()}}
 
-
-def single_bert_infer(session, endpoint_name, text):
+def bot_infer(session, endpoint_name, text):
     """
  function: use endpoint to infer on one single text
     """
     # first preprocess input text
     eprint(endpoint_name)
-    data = preprocess(text)
+
     runtime = session.client("runtime.sagemaker")
     response = runtime.invoke_endpoint(
         EndpointName=endpoint_name,
@@ -138,12 +122,9 @@ def single_bert_infer(session, endpoint_name, text):
     )
 
     result = json.loads(response["Body"].read())
-    pro_0, pro_1 = result["outputs"][0]
-    # return tag negative/positive which have higher probability
-    if pro_0 > pro_1:
-        return "negative"
-    else:
-        return "positive"
+    eprint ("<<<<<<<< result: ", result)
+    # return result
+    return str(result)
 
 
 def __connect_ES() -> Elasticsearch:

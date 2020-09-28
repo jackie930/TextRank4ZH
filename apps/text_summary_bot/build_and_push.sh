@@ -10,8 +10,8 @@ profile=$2
 
 if [ "$image" == "" ]
 then
-    echo "Use image name sentiment-analysis-bot"
-    image="sentiment-analysis-bot"
+    echo "Use image name text-summary-bot"
+    image="text-summary--bot"
 fi
 
 if [ "$profile" == "" ]
