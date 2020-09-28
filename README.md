@@ -252,10 +252,11 @@ print (r.text)
 
 ## Deploy endpoint on SageMaker 
 ```shell script
+endpoint_ecr_image="251885400447.dkr.ecr.cn-northwest-1.amazonaws.com.cn/textrank"
 python create_endpoint.py \
---endpoint_ecr_image_path '847380964353.dkr.ecr.us-east-1.amazonaws.com/textrank:latest' \
+--endpoint_ecr_image_path ${endpoint_ecr_image} \
 --endpoint_name 'textrank' \
---instance_type "ml.m5.xlarge"
+--instance_type "ml.t2.medium"
 ```
 
 在部署结束后，看到SageMaker控制台生成了对应的endpoint,可以使用如下客户端代码测试调用

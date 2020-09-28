@@ -232,6 +232,6 @@ if __name__ == "__main__":
     eprint(">>> Start execution.")
 
     file_list = __search_for_file_list(job_id=job_id, batch_id=batch_id)
-    sentiment_analysis_main(file_list, endpoint_name, output_s3_bucket, output_s3_prefix,
+    text_summary_main(file_list, endpoint_name, output_s3_bucket, output_s3_prefix,
                             region_name)
     eprint("<<< Exit.")

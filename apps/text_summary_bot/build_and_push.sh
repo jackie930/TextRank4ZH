@@ -10,8 +10,8 @@ profile=$2
 
 if [ "$image" == "" ]
 then
-    echo "Use image name text-summary-bot"
-    image="text-summary--bot"
+    echo "Use image name text_summary_bot"
+    image="text_summary_bot"
 fi
 
 if [ "$profile" == "" ]
