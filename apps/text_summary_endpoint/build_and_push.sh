@@ -10,7 +10,7 @@ image=$1
 
 if [ "$image" == "" ]
 then
-    echo "Use image name autogluon-sagemaker-inference"
+    echo "Use image name textrank"
     image="textrank"
 fi
 
@@ -23,9 +23,8 @@ then
 fi
 
 # Get the region defined in the current configuration
-# region=$(aws configure get region)
+region=$(aws configure get region)
 #regions=$(aws ec2 describe-regions --all-regions --query "Regions[].{Name:RegionName}" --output text)
-region='us-east-1'
 
 #for region in $regions; do
 
