@@ -279,7 +279,10 @@ print (result)
 
 ## Deploy via Spot Tagging Bot
 在确保可以部署成功endpint的情况下，我们可以将此功能注册为一个新的机器人。
-
+```shell script
+cd apps/text_summry_bot
+sh build_and_push.sh
+```
 
 ## License
 [MIT](./LICENSE)
