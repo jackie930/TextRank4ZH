@@ -55,8 +55,8 @@ def text_summary_main(s3_path, endpoint_name, output_s3_bucket, output_s3_prefix
     # save json file
     json_file = file_name.replace(".txt", ".json")
     with open(json_file, "w") as fw:  # 建议改为.split('.')
-    json.dump(result, fw, ensure_ascii=False)
-    eprint("write json file success!")
+        json.dump(result, fw, ensure_ascii=False)
+        eprint("write json file success!")
 
     # output to s3
     print ("<<<< output_s3_prefix: ",output_s3_prefix)

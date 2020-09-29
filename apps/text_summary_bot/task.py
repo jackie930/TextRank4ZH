@@ -25,6 +25,12 @@ batch_id = os.getenv("batch_id")
 job_id = os.getenv("job_id")
 elastic_search_index = os.getenv('es_index')
 
+import sys
+try:
+    reload(sys)
+    sys.setdefaultencoding('utf-8')
+except:
+    pass
 
 # Hack to print to stderr so it appears in CloudWatch.
 def eprint(*args, **kwargs):

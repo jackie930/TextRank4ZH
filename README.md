@@ -283,6 +283,7 @@ print (result)
 ```shell script
 cd apps/text_summry_bot
 sh build_and_push.sh
+docker run -v -d -p 8080:8080 text_summary_bot
 ```
 
 ## License
