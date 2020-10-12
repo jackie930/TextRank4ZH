@@ -38,8 +38,12 @@ for region in $regions; do
 if [[ $region =~ ^cn.* ]]
 then
     fullname="${account}.dkr.ecr.${region}.amazonaws.com.cn/${image}:latest"
+    registry_id="727897471807"
+    registry_uri="${registry_id}.dkr.ecr.${region}.amazonaws.com.cn"
 else
     fullname="${account}.dkr.ecr.${region}.amazonaws.com/${image}:latest"
+    registry_id="763104351884"
+    registry_uri="${registry_id}.dkr.ecr.${region}.amazonaws.com"
 fi
 
 echo ${fullname}
@@ -61,7 +65,7 @@ aws --profile ${profile} ecr set-repository-policy \
 $(aws --profile ${profile} ecr get-login --registry-ids ${account} --region ${region} --no-include-email)
 
 # Build the docker image, tag with full name and then push it to ECR
-docker build -t ${image} -f Dockerfile .
+docker build -t ${image} -f Dockerfile . --build-arg REGISTRY_URI=${registry_uri}
 docker tag ${image} ${fullname}
 docker push ${fullname}
 

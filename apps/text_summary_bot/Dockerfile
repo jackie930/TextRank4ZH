@@ -1,4 +1,8 @@
-FROM tensorflow/tensorflow:1.15.2-gpu-py3
+ARG REGISTRY_URI
+FROM ${REGISTRY_URI}/mxnet-inference:1.6.0-cpu-py3
+
+ENV PYTHONUNBUFFERED=TRUE
+ENV PYTHONDONTWRITEBYTECODE=TRUE
 
 ENV LANG=en_US.utf8
 COPY . /tmp
