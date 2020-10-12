@@ -85,7 +85,6 @@ def text_summary_main(input_s3_path_list: list, endpoint_name, output_s3_bucket,
 
         # output to s3
         print ("<<<< output_s3_prefix: ",output_s3_prefix)
-        print ("<<<< upload_key: ",upload_key)
         upload_key=output_s3_prefix+'/'+json_file
         s3.upload_file(Filename=json_file, Key=upload_key, Bucket=output_s3_bucket)
         print("uploaded to s3://{}/{}".format(output_s3_bucket, upload_key))
