@@ -66,10 +66,30 @@ def invocations():
     print('Invoked with {} records'.format(data.keys()))
 
     # Do the prediction
-    #result = "摘要"
+    #result = "摘要，关键词"
     tr4w = TextRank4Keyword()
     tr4w.analyze(text=data_input, lower=True, window=2)
-    result = tr4w.get_keywords(20, word_min_len=1)
+    keyword_ls = []
+    keyword_weight = []
+    for item in tr4w.get_keywords(20, word_min_len=1):
+        keyword_ls.append(item.word)
+        keyword_weight.append(item.weight)
+
+    tr4s = TextRank4Sentence()
+    tr4s.analyze(text=data_input, lower=True, source = 'all_filters')
+    summarysentence_ls = []
+    summarysentence_location = []
+    summarysentence_weight = []
+    for item in tr4s.get_key_sentences(num=3):
+        summarysentence_ls.append(item.sentence)
+        summarysentence_location.append(item.index)
+        summarysentence_weight.append(item.weight)
+
+    result = {"关键词列表":keyword_ls,
+              "关键词权重":keyword_weight,
+              "摘要列表":summarysentence_ls,
+              "摘要位置index":summarysentence_location,
+              "摘要权重":summarysentence_weight}
     print ("<<<result: ", result)
 
     x={"res":result}
