@@ -13,6 +13,13 @@ import os
 
 import sys
 
+import sys
+try:
+    reload(sys)
+    sys.setdefaultencoding('utf-8')
+except:
+    pass
+
 import json
 from boto3.session import Session
 from datetime import datetime
