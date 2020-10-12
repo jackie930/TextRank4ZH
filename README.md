@@ -283,7 +283,19 @@ print (result)
 ```shell script
 cd apps/text_summry_bot
 sh build_and_push.sh
-docker run -v -d -p 8080:8080 text_summary_bot
+```
+
+在api gateway中启动一个机器人任务范例提交
+```shell script
+{
+"s3_bucket": "spot-bot-asset",
+"s3_path": "text_summary_bot/input",
+"bot_name": "text_summary_bot",
+"number_of_bots": "1",
+"bulk_size": "500",
+"output_s3_bucket": "spot-bot-asset",
+"output_s3_prefix": "text_summary_bot/output"
+}
 ```
 
 ## License
