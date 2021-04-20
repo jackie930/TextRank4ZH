@@ -119,6 +119,47 @@ print (r.text)
 "摘要列表": ["《半導體》Q1展望保守，世界垂淚2019/02/11 10:28時報資訊【時報記者沈培華台北報導】世界先進 (5347) 去年營運創歷史新高，每股純益達3.72元", "世界先進於年前宣布，將購買格芯位於新加坡Tampines的8吋晶圓3E廠房、廠務設施、機器設備及微機電(MEMS)智財權與業務，交易總金額2.36億美元，交割日訂108年12月31日", "格芯晶圓3E廠現有月產能3.5萬片8吋晶圓，世界先進每年將可增加超過40萬片8吋晶圓產能，增進公司明年起業績成長動能"], 
 "摘要位置index": [0, 9, 10], "摘要权重": [0.1061431564717524, 0.10339832449272994, 0.09211266281495177]}}
 ```
+## 使用rouge指标评估
+
+###安装pyrouge
+
+```shell script
+sudo yum -y install perl-CPAN
+sudo cpan YAML
+sudo cpan Module::Metadata
+sudo cpan Module::Build
+sudo cpan IO::Socket
+sudo cpan IO::Socket::IP
+sudo cpan HTTP::Daemon
+sudo cpan LWP::UserAgent
+sudo cpan DB_File
+
+cd pyrouge
+
+cd tools/ROUGE-1.5.5/data/
+rm WordNet-2.0.exc.db
+./WordNet-2.0-Exceptions/buildExeptionDB.pl ./WordNet-2.0-Exceptions ./smart_common_words.txt ./WordNet-2.0.exc.db
+
+pyrouge_set_rouge_path /home/ec2-user/SageMaker/pyrouge/tools/ROUGE-1.5.5
+
+cd ../../../
+pyrouge_set_rouge_path /home/ec2-user/SageMaker/pyrouge/tools/ROUGE-1.5.5
+python setup.py install
+```
+
+### 测试评估
+
+```shell script
+python test_rouge.py
+```
+
+结果产生为如下格式的结果表
+
+| 原文 | 标注摘要 | 生成摘要 |评估指标rouge1 |评估指标rouge2 |
+| ------ | ------ | ------ |------ |------|
+| text | text | text |number |number|
+
+
 
 ## Deploy endpoint on SageMaker 
 ```shell script
